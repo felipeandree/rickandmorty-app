@@ -2,7 +2,7 @@ import React from "react";
 
 const Characters = ({ characters = [] }) => {
   return (
-    <div className="/">
+    <div className="col-4">
       {characters.map((item, index) => (
         <div key={index} className="/">
             <div className="card" >

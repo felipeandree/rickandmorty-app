@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Characters from "./components/Characters";
-import Pagination from './components/pagination'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap"
+import Characters from "./components/Characters/Characters";
+import Pagination from './components/Pagination/Pagination';
+import "./index.css"
+import Filters from "./components/Filters/Filters";
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [info, setInfo] = useState({});
 
-  const initialUrl = "https://rickandmortyapi.com/api/character";
+  const initialUrl = `https://rickandmortyapi.com/api/character/?page=${info}`;
 
   const fetchCharacters = (url) => {
     fetch(url)
@@ -32,16 +36,32 @@ function App() {
 
   return (
     <>
-      <h1> Rick and Morty</h1>
+      <h1 className="text-center ubuntu my-4"> Rick and Morty
+      <span className="text-primary ubuntu"> Wiki</span>
+      </h1>
 
       <div className="container">
-        <Pagination
+      <Pagination
           prev={info.prev}
           next={info.next}
           onPrevious={onPrevious}
           onNext={onNext}
         />
-        <Characters characters={characters} />
+        <div className="row">
+          <div className="col-3">
+            <Filters/>
+          </div>
+          <div className="col-8">
+          <div className="row">
+          <Characters characters={characters} />
+          <Characters characters={characters} />
+          <Characters characters={characters} />
+         
+          </div>
+          </div>
+        </div>
+       
+       
         <Pagination
           prev={info.prev}
           next={info.next}
