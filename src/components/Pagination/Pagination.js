@@ -1,33 +1,37 @@
-import React from 'react'
+import React from "react";
+import ReactPaginate from "react-paginate";
+import styles from "./Pagination.module.scss"
 
-const pagination = ({prev, next, onPrevious, onNext}) => {
-    const handlePrevious = () => {
-        onPrevious();
-    }
+const Pagination = ({ info, pageNumber, setPageNumber }) => {
 
-    const handleNext = () => {
-        onNext();
-    }
+  let pageChange = (data) => {
+    setPageNumber(data.selected + 1);
+  };
+
+  // const prev = () => {
+  //   if(pageNumber === 1) return
+  //   setPageNumber((page) => page - 1);
+  // };
+
+  // const next = () => {
+  //   setPageNumber((page) => page + 1);
+  // };
   return (
-    <nav>
-      <ul className="pagination">
-        {prev ? (
-          <li className="page-item">
-            <button className="page-link" onClick={handlePrevious}>
-              Previous
-            </button>
-          </li>
-        ) : null}
-        {next ? (
-          <li className="page-item">
-            <button className="page-link" onClick={handleNext}>
-              Next
-            </button>
-          </li>
-        ) : null}
-      </ul>
-    </nav>
-  );
-}
+    <ReactPaginate
+    className="pagination justify-content-center my-4 gap-4"
+    nextLabel="Próximo"
+    forcePage={pageNumber === 1 ? 0 : pageNumber - 1}
+    previousLabel="Anterior"
+    previousClassName="btn btn-primary"
+    nextClassName="btn btn-primary"
+    pageClassName="page-item"
+    pageLinkClassName="page-link"
+    activeClassName="active"
+    pageCount={info?.pages}
+    onPageChange={pageChange}
 
-export default pagination
+    />
+  );
+};
+
+export default Pagination;

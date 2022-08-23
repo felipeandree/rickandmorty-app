@@ -1,72 +1,54 @@
 import React, { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap/dist/js/bootstrap"
-import Characters from "./components/Characters/Characters";
-import Pagination from './components/Pagination/Pagination';
-import "./index.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
+import Cards from "./components/Cards/Cards";
+import Pagination from "./components/Pagination/Pagination";
+import "./index.css";
 import Filters from "./components/Filters/Filters";
+import Search from "./components/Search/Search";
+
 
 function App() {
-  const [characters, setCharacters] = useState([]);
-  const [info, setInfo] = useState({});
 
-  const initialUrl = `https://rickandmortyapi.com/api/character/?page=${info}`;
+  const [pageNumber, setPageNumber] = useState(1);
+  const [search, setSearch] = useState("");
+  const [fetchedData, updateFetchedData] = useState([]);
+  const { info, results } = fetchedData;
 
-  const fetchCharacters = (url) => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setCharacters(data.results);
-        setInfo(data.info);
-      })
-      .catch((error) => console.log(error));
-  };
+  console.log(results);
 
-  const onPrevious = () => {
-    fetchCharacters(info.prev);
-  }
-
-  const onNext = () => {
-    fetchCharacters(info.next);
-  }
+  const initialUrl = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}`;
 
   useEffect(() => {
-    fetchCharacters(initialUrl);
-  }, []);
+    (async function () {
+      let data = await fetch(initialUrl).then((response) => response.json());
+      updateFetchedData(data);
+    })();
+  }, [initialUrl]);
 
   return (
     <>
-      <h1 className="text-center ubuntu my-4"> Rick and Morty
-      <span className="text-primary ubuntu"> Wiki</span>
+      <h1 className='text-center ubuntu my-4'>
+        {"Rick & Morty"}
+        <span className='text-info ubuntu'> Wiki</span>
       </h1>
 
-      <div className="container">
-      <Pagination
-          prev={info.prev}
-          next={info.next}
-          onPrevious={onPrevious}
-          onNext={onNext}
-        />
-        <div className="row">
-          <div className="col-3">
-            <Filters/>
-          </div>
-          <div className="col-8">
-          <div className="row">
-          <Characters characters={characters} />
-          <Characters characters={characters} />
-          <Characters characters={characters} />
-         
-          </div>
+      <Search setPageNumber={setPageNumber} setSearch={setSearch} />
+
+      <div className='container'>
+        <div className='row'>
+          <Filters />
+          <div className='col-8'>
+            <div className='row'>
+              <Cards results={results} />
+            </div>
           </div>
         </div>
-       
-       
+
         <Pagination
-          prev={info.prev}
-          next={info.next}
-          onPrevious={onPrevious}
-          onNext={onNext}
+          info={info}
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
         />
       </div>
     </>
