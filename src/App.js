@@ -29,7 +29,7 @@ function App() {
         //   //  setInfo(data.info);
         //    setPageNumber(data.info);
         //   })
-        .catch((error) => console.log(error));
+        // .catch((error) => console.log(error));
     })();
   }, [initialUrl]);
 
