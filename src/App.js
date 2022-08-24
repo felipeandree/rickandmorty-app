@@ -33,7 +33,7 @@ function App(){
   )
 }
 const Home = () => {
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, updatePageNumber] = useState(1);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [gender, setGender] = useState("");
@@ -54,7 +54,7 @@ const Home = () => {
   return (
     <>
       <h1 className="text-center mb-4">Personagens</h1>
-      <Search setPageNumber={setPageNumber} setSearch={setSearch} />
+      <Search updatePageNumber={updatePageNumber} setSearch={setSearch} />
 
       <div className='container'>
         <div className='row'>
@@ -62,7 +62,7 @@ const Home = () => {
             setGender={setGender}
             setStatus={setStatus}
             setSpecies={setSpecies}
-            setPageNumber={setPageNumber}
+            setPageNumber={updatePageNumber}
           />
           <div className='col-lg-8 col-12'>
             <div className='row'>
@@ -74,7 +74,7 @@ const Home = () => {
         <Pagination
           info={info}
           pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
+          updatePageNumber={updatePageNumber}
         />
       </div>
     </>
